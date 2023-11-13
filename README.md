@@ -1,7 +1,5 @@
-# COMP229-MidTerm Test
-
-## Welcome to the MidTerm Project - the Favourite Book List App
+# BakerBuddy
 
 please use **`npm install`** to install project dependencies
-# COMP229-MIDTERM-301225795
-# BakerBuddy
+please use **`npm run dev`** to run the project
+please navigate to "http://localhost:3000" to view running application
