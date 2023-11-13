@@ -1,0 +1,63 @@
+<main class="container">
+    <div class="row">
+        <div class="offset-md-1 col-md-9">
+            <h1>
+                <%= title %>
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="text-end"> <!-- New column for the button -->
+            <a href="/employees/add" class="btn btn-success" role="button">
+                <i class="fas fa-plus-circle"></i> Add New
+            </a>
+            <br><br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="offset-md-1 col-md-11">
+            <table class="table table-bordered table-striped table-hover">
+                
+                <!-- Header Row-->
+                <tr class="table-dark">
+                    <th class="text-center col-2">Username</th>
+                    <th class="text-center col-2">Role</th>
+                    <th class="text-center col-2">Created At</th>
+                    <th class="text-center col-2">Updated At</th>
+                    <th class="text-center col-2"></th>
+                    <th class="text-center col-2"></th>
+                    <!-- Add other employee-related header columns as needed -->
+                </tr>
+    
+                <!-- Repeatable Template Row -->
+                <% for(let count=0; count < employees.length; count++) { %>
+                    <tr>
+                        <td class="text-center col-2">
+                            <%= employees[count].username %>
+                        </td>
+                        <td class="text-center col-2">
+                            <%= employees[count].role %>
+                        </td>
+                        <td class="text-center col-2">
+                            <%= employees[count].createdAt %>
+                        </td>
+                        <td class="text-center col-2">
+                            <%= employees[count].updatedAt %>
+                        </td>
+                        <!-- Add other employee-related columns as needed -->
+                        <td class="text-center col-1">
+                            <a class="btn btn-warning" href="/employees/edit/<%= employees[count]._id %>">
+                                Edit
+                            </a>
+                        </td>
+                        <td class="text-center col-1">
+                            <a class="btn btn-danger" href="/employees/delete/<%= employees[count]._id %>">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="row">
+        <div class="offset-md-3 col-md-6">
+            <h1><%= title %></h1>
+
+            <form class="form" method="POST">
+                <input type="hidden" name="id" value="<%= employee._id %>" >
+
+                <div class="form-group">
+                    <label for="usernameTextField">Username</label>
+                    <input type="text" class="form-control"
+                        id="usernameTextField"
+                        placeholder="Enter the Username"
+                        name="username" 
+                        value="<%= employee.username %>"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordTextField">Password</label>
+                    <input type="password" class="form-control"
+                        id="passwordTextField"
+                        placeholder="Enter the Password"
+                        name="password" 
+                        value="<%= employee.password %>"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="roleSelect">Role</label>
+                    <select class="form-control" id="roleSelect" name="role" required>
+                        <option value="Admin" <%= (employee.role === 'Admin') ? 'selected' : '' %>>Admin</option>
+                        <option value="Manager" <%= (employee.role === 'Manager') ? 'selected' : '' %>>Manager</option>
+                        <option value="Baker" <%= (employee.role === 'Baker') ? 'selected' : '' %>>Baker</option>
+                        <!-- Add other roles as needed -->
+                    </select>
+                </div>
+
+                <!-- Add other employee-related form fields as needed -->
+
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-edit"></i> Submit</button>
+
+                <a href="/employees/list" class="btn btn-warning">
+                    <i class="fas fa-undo"></i> Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
