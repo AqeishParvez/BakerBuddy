@@ -16,6 +16,7 @@ import mongoose from 'mongoose';
 // import the router data
 import indexRouter from '../routes/index.js';
 import employeesRouter from '../routes/employees.js';
+import productRouter from '../routes/product.js';
 
 const app = new express();
 
@@ -47,6 +48,7 @@ app.use(express.static(path.join(__dirname, '../../node_modules')));
 // use routes
 app.use('/', indexRouter);
 app.use('/employees', employeesRouter);
+app.use('/product', productRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
