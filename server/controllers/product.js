@@ -23,6 +23,7 @@ export function processAddPage(req, res, next) {
         name: req.body.name,
         price: req.body.price,
         expiry: req.body.expiry,
+        quantity: req.body.quantity,
         // Add other product-related fields as needed
     });
 
@@ -32,7 +33,7 @@ export function processAddPage(req, res, next) {
             res.end(error);
         }
 
-        res.redirect('/products');
+        res.redirect('/product/list');
     });
 }
 
@@ -59,6 +60,7 @@ export function processEditPage(req, res, next) {
         name: req.body.name,
         price: req.body.price,
         expiry: req.body.expiry,
+        quantity: req.body.quantity,
     });
 
     productsModel.updateOne({_id: id}, newProduct, function(error){
@@ -67,7 +69,7 @@ export function processEditPage(req, res, next) {
             res.end(error);
         }
 
-        res.redirect('/products');
+        res.redirect('/product/list');
 
     })
 }
