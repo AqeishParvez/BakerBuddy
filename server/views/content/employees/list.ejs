@@ -3,7 +3,7 @@
 
     var filterTable = () => {
         var filterColumns = document.getElementById("searchColumn").value
-        var trs = document.querySelectorAll(`#employeeTbl tbody tr:not(:first-child)`)
+        var trs = document.querySelectorAll(`#employeeTbl tbody tr`)
         var filter = document.getElementById("searchInput").value
         var regex = new RegExp(filter, 'i')
 
