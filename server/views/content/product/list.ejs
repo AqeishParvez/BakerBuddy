@@ -1,3 +1,24 @@
+<script>
+    var columns = []
+
+    var filterTable = () => {
+        var filterColumns = document.getElementById("searchColumn").value
+        var trs = document.querySelectorAll(`#inventoryTbl tbody tr:not(:first-child)`)
+        var filter = document.getElementById("searchInput").value
+        var regex = new RegExp(filter, 'i')
+
+        var find = (childrenArr) => {
+            return regex.test(childrenArr.innerHTML)? true : false
+        } 
+
+        var setTr = ({ style, children }) => {
+            console.log(find(children[filterColumns]))
+            style.display = find(children[filterColumns]) ? '' : 'none'
+        }
+    
+        trs.forEach(setTr)
+    }
+</script>
 <main class="container">
     <div class="row">
         <div class="offset-md-1 col-md-9">
@@ -16,7 +37,17 @@
     </div>
     <div class="row">
         <div class="offset-md-1 col-md-11">
-            <table class="table table-bordered table-striped table-hover">
+            <select id="searchColumn">
+                <option value="0">Name</option>
+                <option value="1">Price</option>
+                <option value="2">Quantity</option>
+                <option value="3">Product Expiry</option>
+                <option value="4">Created At</option>
+                <option value="5">Updated At</option>
+            </select>
+            <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterTable()">
+
+            <table id="inventoryTbl" class="table table-bordered table-striped table-hover">
                 
                 <!-- Header Row-->
                 <tr class="table-dark">
