@@ -26,7 +26,6 @@ export function processAddPage(req, res, next) {
         quantity: req.body.quantity,
         // Add other product-related fields as needed
     });
-
     productsModel.create(newProduct, function(error) {
         if (error) {
             console.error(error);

@@ -46,7 +46,7 @@
             </select>
             <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterTable()">
 
-            <table id="inventoryTbl" class="table table-bordered table-striped table-hover">
+            <table id="inventoryTbl" class="table table-bordered table-striped table-hover sortable">
                 
                 <!-- Header Row-->
                 <tr class="table-dark">
@@ -73,13 +73,13 @@
                             <%= product[count].quantity %>
                         </td>
                         <td class="text-center col-2">
-                            <%= product[count].expiry %>
+                            <%= `${product[count].expiry.getFullYear()}-${(product[count].expiry.getMonth() + 1).toString().padStart(2, '0')}-${product[count].expiry.getDate().toString().padStart(2, '0')}` %>
                         </td>
                         <td class="text-center col-2">
-                            <%= product[count].createdAt %>
+                            <%= `${product[count].createdAt.getFullYear()}-${(product[count].createdAt.getMonth() + 1).toString().padStart(2, '0')}-${product[count].createdAt.getDate().toString().padStart(2, '0')}` %>
                         </td>
                         <td class="text-center col-2">
-                            <%= product[count].updatedAt %>
+                            <%= `${product[count].updatedAt.getFullYear()}-${(product[count].updatedAt.getMonth() + 1).toString().padStart(2, '0')}-${product[count].updatedAt.getDate().toString().padStart(2, '0')}` %>
                         </td>
                         
                         <!-- Add other employee-related columns as needed -->
