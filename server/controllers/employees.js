@@ -1,4 +1,5 @@
 import employeesModel from '../models/employee.js';
+import { UserDisplayName } from '../utils/index.js';
 
 /* GET Employee List page. READ */
 export function displayEmployeeList(req, res, next) {
@@ -8,13 +9,13 @@ export function displayEmployeeList(req, res, next) {
             console.error(err);
             res.end(err);
         }
-        res.render('index', { title: 'Employee List', page: 'employees/list', employees: employeeCollection });
+        res.render('index', { title: 'Employee List', page: 'employees/list', employees: employeeCollection, displayName: UserDisplayName(req) });
     });
 }
 
 // GET the Employee Details page in order to add a new Employee
 export function displayAddPage(req, res, next) {
-    res.render('index', { title: 'Add Employee', page: 'employees/edit', employee: {} });
+    res.render('index', { title: 'Add Employee', page: 'employees/edit', employee: {}, displayName: UserDisplayName(req) });
 }
 
 // POST process the Employee Details page and create a new Employee - CREATE
@@ -46,7 +47,7 @@ export function displayEditPage(req, res, next) {
             res.end(error);
         }
 
-        res.render('index', { title: 'Edit Employee', page: 'employees/edit', employee });
+        res.render('index', { title: 'Edit Employee', page: 'employees/edit', employee, displayName: UserDisplayName(req) });
     });
 }
 

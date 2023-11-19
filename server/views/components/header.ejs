@@ -17,6 +17,25 @@
             <li class="nav-item">
               <a class="nav-link <%= (page == 'product/list') ? 'active' : ''; %>" aria-current="page" href="/product/list"><i class="fa-solid fa-book fa-lg"></i> Inventory</a>
             </li>
+
+
+            <!-- Login/Logout-->
+            <% if (user) { %>
+                    <!-- User is logged in -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <%= user.displayName %>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/auth/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                <% } else { %>
+                    <!-- User is not logged in -->
+                    <li class="nav-item">
+                        <a class="nav-link <%= (page == 'auth/login') ? 'active' : ''; %>" aria-current="page" href="/auth/login">Login</a>
+                    </li>
+                <% } %>
           
         </ul>
       </div>
