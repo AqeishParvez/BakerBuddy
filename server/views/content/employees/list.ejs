@@ -38,9 +38,12 @@
         <div class="offset-md-1 col-md-11">
             <select id="searchColumn">
                 <option value="0">Username</option>
+                <option value="2">First Name</option>
+                <option value="3">Last Name</option>
                 <option value="1">Role</option>
-                <option value="2">Created At</option>
-                <option value="3">Updated At</option>
+                <option value="6">Email</option>
+                <option value="4">Registration Code</option> <!-- New column for registration code -->
+                <option value="5">Registered</option> <!-- New column for registered field -->
             </select>
             <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterTable()">
             <table id="employeeTbl" class="table table-bordered table-striped table-hover sortable">
@@ -48,9 +51,12 @@
                 <!-- Header Row-->
                 <tr class="table-dark">
                     <th class="text-center col-2">Username</th>
+                    <th class="text-center col-2">First Name</th>
+                    <th class="text-center col-2">Last Name</th>
                     <th class="text-center col-2">Role</th>
-                    <th class="text-center col-2">Created At</th>
-                    <th class="text-center col-2">Updated At</th>
+                    <th class="text-center col-2">Email</th>
+                    <th class="text-center col-2">Registration Code</th> <!-- New column for registration code -->
+                    <th class="text-center col-2">Registered</th> <!-- New column for registered field -->
                     <th class="text-center col-2"></th>
                     <th class="text-center col-2"></th>
                     <!-- Add other employee-related header columns as needed -->
@@ -63,13 +69,22 @@
                             <%= employees[count].username %>
                         </td>
                         <td class="text-center col-2">
+                            <%= employees[count].firstName %>
+                        </td>
+                        <td class="text-center col-2">
+                            <%= employees[count].lastName %>
+                        </td>
+                        <td class="text-center col-2">
                             <%= employees[count].role %>
                         </td>
                         <td class="text-center col-2">
-                            <%= `${employees[count].createdAt.getFullYear()}-${(employees[count].createdAt.getMonth() + 1).toString().padStart(2, '0')}-${employees[count].createdAt.getDate().toString().padStart(2, '0')}` %>
+                            <%= employees[count].email %>
                         </td>
                         <td class="text-center col-2">
-                            <%= `${employees[count].updatedAt.getFullYear()}-${(employees[count].updatedAt.getMonth() + 1).toString().padStart(2, '0')}-${employees[count].updatedAt.getDate().toString().padStart(2, '0')}` %>
+                            <%= employees[count].registrationCode %>
+                        </td>
+                        <td class="text-center col-2">
+                            <%= employees[count].registered %>
                         </td>
                         <!-- Add other employee-related columns as needed -->
                         <td class="text-center col-1">

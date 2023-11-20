@@ -2,6 +2,9 @@ import express from 'express';
 
 import passport from 'passport';
 
+//import employees model
+import Employees from '../models/employee.js';
+
 //User Model Information
 import User from '../models/user.js';
 
@@ -40,19 +43,50 @@ export function DisplayRegistrationPage(req, res, next){
 
 
 //Pocessing Functions
-export function ProcessRegisterPage(req, res, next){
-    let newUser = new User({
-        username: req.body.username,
-        emailAddress: req.body.emailAddress,
-        displayName: req.body.firstName + " " + req.body.lastName
+export async function ProcessRegisterPage(req, res, next) {
+    // Extract information from the registration form
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const email = req.body.emailAddress;
+    const registrationCode = req.body.registrationCode;
+    const role = req.body.role;
+
+    // Check if there is an employee with matching information
+    const matchingEmployee = await Employees.findOne({
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        registrationCode: registrationCode
     });
 
-    User.register(newUser, req.body.password, function(err){
-        if(err){
-            if(err.name == "UserExistsError"){
+    // Check if a user with the same email address already exists
+    const existingUser = await User.findOne({ emailAddress: email });
+
+    if (existingUser) {
+        // If a user with the same email already exists, display an error message
+        req.flash('registerMessage', 'A user is already registered with this email address.');
+        return res.redirect('/auth/register');
+    }
+
+    if (!matchingEmployee) {
+        // If no matching employee found, display an error message
+        req.flash('registerMessage', 'Mismatch in information. Please check your details.');
+        return res.redirect('/auth/register');
+    }
+
+    // If a matching employee is found and no existing user, proceed with user registration
+    const newUser = new User({
+        username: req.body.username,
+        emailAddress: email,
+        displayName: `${firstName} ${lastName}`,
+        role: role,
+    });
+
+    User.register(newUser, req.body.password, async function (err) {
+        if (err) {
+            if (err.name == "UserExistsError") {
                 console.error('ERROR: User Already Exists!');
                 req.flash('registerMessage', err.name);
-
             } else {
                 console.error(err.name);
                 req.flash('registerMessage', 'Server Error')
@@ -61,12 +95,18 @@ export function ProcessRegisterPage(req, res, next){
             return res.redirect('/auth/register');
         }
 
-        return passport.authenticate('local')(req, res, function(){
+        // Update the registered field in the Employees collection
+        await Employees.updateOne(
+            { _id: matchingEmployee._id },
+            { $set: { registered: true } }
+        );
+
+        return passport.authenticate('local')(req, res, function () {
             return res.redirect('/');
         });
-
-    })
+    });
 }
+
 export function ProcessLoginPage(req, res, next){
     passport.authenticate('local', function (err, user){
         if(err){

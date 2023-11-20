@@ -10,18 +10,21 @@
             <a class="nav-link <%= (page == 'home') ? 'active' : ''; %>" aria-current="page" href="/home"><i class="fa-solid fa-house-signal fa-lg"></i> Home</a>
           </li>
 
-            <li class="nav-item">
-              <a class="nav-link <%= (page == 'employees/list') ? 'active' : ''; %>" aria-current="page" href="/employees/list"><i class="fa-solid fa-book fa-lg"></i> Employee Manager</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link <%= (page == 'product/list') ? 'active' : ''; %>" aria-current="page" href="/product/list"><i class="fa-solid fa-book fa-lg"></i> Inventory</a>
-            </li>
-
-
             <!-- Login/Logout-->
             <% if (user) { %>
                     <!-- User is logged in -->
+                    <% console.log('User:', user); %>
+
+                    <!-- Logged in user is admin -->
+                    <% if (user.role == 'Admin') { %>
+                        <li class="nav-item">
+                          <a class="nav-link <%= (page == 'employees/list') ? 'active' : ''; %>" aria-current="page" href="/employees/list"><i class="fa-solid fa-book fa-lg"></i> Employee Manager</a>
+                        </li>
+                    <% } %>
+                    
+                    <li class="nav-item">
+                      <a class="nav-link <%= (page == 'product/list') ? 'active' : ''; %>" aria-current="page" href="/product/list"><i class="fa-solid fa-book fa-lg"></i> Inventory</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <%= user.displayName %>

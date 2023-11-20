@@ -1,10 +1,42 @@
-import employeesModel from '../models/employee.js';
+import mongoose from 'mongoose';
+import Employees from '../models/employee.js';
+import User from '../models/user.js';
 import { UserDisplayName } from '../utils/index.js';
 
-/* GET Employee List page. READ */
+let originalEmployee;
+
+// Helper function to generate a unique pin code
+function generateUniquePinCode() {
+    // For simplicity, we'll use a basic example here
+    return Math.floor(1000 + Math.random() * 9000).toString();
+}
+
+// Middleware to autogenerate a unique username
+function generateUniqueUsername(user, next) {
+    const usernameBase = `${user.firstName.charAt(0).toLowerCase()}${user.lastName.toLowerCase()}`;
+
+    // Check if the generated username already exists
+    mongoose.model('Employees').findOne({ username: { $regex: new RegExp(`^${usernameBase}`, 'i') } }, (err, existingUser) => {
+        if (existingUser) {
+            // If the username exists, append a number to make it unique
+            let count = 1;
+            let newUsername = `${usernameBase}${count}`;
+            while (existingUser && existingUser.username === newUsername) {
+                count++;
+                newUsername = `${usernameBase}${count}`;
+            }
+            user.username = newUsername;
+        } else {
+            user.username = usernameBase;
+        }
+        next();
+    });
+}
+
+// GET Employee List page. READ
 export function displayEmployeeList(req, res, next) {
     // find all employees in the employee collection
-    employeesModel.find((err, employeeCollection) => {
+    Employees.find((err, employeeCollection) => {
         if (err) {
             console.error(err);
             res.end(err);
@@ -15,74 +47,122 @@ export function displayEmployeeList(req, res, next) {
 
 // GET the Employee Details page in order to add a new Employee
 export function displayAddPage(req, res, next) {
-    res.render('index', { title: 'Add Employee', page: 'employees/edit', employee: {}, displayName: UserDisplayName(req) });
+    res.render('index', { title: 'Add Employee', page: 'employees/add', employee: {}, displayName: UserDisplayName(req) });
 }
 
 // POST process the Employee Details page and create a new Employee - CREATE
 export function processAddPage(req, res, next) {
-    let newEmployee = employeesModel({
-        username: req.body.username,
-        password: req.body.password,
+    const newEmployee = new Employees({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
         role: req.body.role,
+        registrationCode: generateUniquePinCode(),
+        registered: req.body.registered,
         // Add other employee-related fields as needed
     });
 
-    employeesModel.create(newEmployee, function(error) {
-        if (error) {
-            console.error(error);
-            res.end(error);
-        }
-
-        res.redirect('/employees');
+    // Generate a unique username before saving
+    generateUniqueUsername(newEmployee, () => {
+        newEmployee.save()
+            .then(() => res.redirect('/employees'))
+            .catch((error) => {
+                console.error(error);
+                res.end(error);
+            });
     });
 }
 
 // GET the Employee Details page in order to edit an existing Employee
 export function displayEditPage(req, res, next) {
-    let id = req.params.id;
+    const id = req.params.id;
 
-    employeesModel.findById(id, function(error, employee) {
+    Employees.findById(id, (error, employee) => {
         if (error) {
             console.error(error);
             res.end(error);
         }
 
-        res.render('index', { title: 'Edit Employee', page: 'employees/edit', employee, displayName: UserDisplayName(req) });
+        // Store the original employee information
+        originalEmployee = { ...employee.toObject() };
+
+        res.render('index', { title: 'Edit Employee', page: 'employees/edit', employee, displayName: UserDisplayName(req)});
     });
 }
 
 // POST - process the information passed from the details form and update the document
 export function processEditPage(req, res, next) {
-    let id = req.params.id;
+    const id = req.params.id;
 
-    let newEmployee = employeesModel({
-        "_id": req.body.id,
-        username: req.body.username,
-        password: req.body.password,
+    const updatedEmployee = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        registered: req.body.registered,
+        registrationCode: req.body.registrationCode,
         role: req.body.role,
-    });
+    };
 
-    employeesModel.updateOne({_id: id}, newEmployee, function(error){
-        if(error){
-            console.error(error);
-            res.end(error);
-        }
+    // Check if firstName or lastName has changed
+    const firstNameChanged = updatedEmployee.firstName !== originalEmployee.firstName;
+    const lastNameChanged = updatedEmployee.lastName !== originalEmployee.lastName;
 
-        res.redirect('/employees');
+    if (firstNameChanged || lastNameChanged) {
+        // Generate a unique username if either firstName or lastName has changed
+        generateUniqueUsername(updatedEmployee, () => {
+            // Update the document with the new information
+            Employees.updateOne({ _id: id }, updatedEmployee, (error) => {
+                if (error) {
+                    console.error(error);
+                    res.end(error);
+                }
 
-    })
+                // Redirect to the employee list page
+                res.redirect('/employees');
+            });
+        });
+    } else {
+        // If neither firstName nor lastName has changed, proceed without changing the username
+        Employees.updateOne({ _id: id }, updatedEmployee, (error) => {
+            if (error) {
+                console.error(error);
+                res.end(error);
+            }
+
+            // Redirect to the employee list page
+            res.redirect('/employees');
+        });
+    }
 }
 
 // GET - process the delete by user id
 export function processDelete(req, res, next) {
-    let id = req.params.id;
+    const id = req.params.id;
 
-    employeesModel.remove({ _id: id }, function(error) {
+    // Retrieve the email address of the employee being deleted
+    Employees.findById(id, (error, employee) => {
         if (error) {
             console.error(error);
             res.end(error);
         }
 
-        res.redirect('/employees/list');
+        const email = employee.email;
+
+        // Remove the employee from the Employees collection
+        Employees.remove({ _id: id }, async (error) => {
+            if (error) {
+                console.error(error);
+                res.end(error);
+            }
+
+            // Remove the corresponding user from the Users collection based on the email address
+            try {
+                await User.deleteOne({ emailAddress: email });
+                res.redirect('/employees/list');
+            } catch (deleteError) {
+                console.error(deleteError);
+                res.end(deleteError);
+            }
+        });
     });
 }

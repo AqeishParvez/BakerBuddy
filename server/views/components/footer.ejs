@@ -1,5 +1,11 @@
 <nav class="navbar fixed-bottom bg-light">
-    <div class="container-fluid">
-      <h5 id="copyright">&copy; Copyright Aqeish Parvez — 2023</h5>
-    </div>
+  <div class="container-fluid">
+      <h5 id="userRole">
+          <% if (user && user.role) { %>
+              Logged in as: <%= user.role %>
+          <% } else { %>
+              Not logged in
+          <% } %>
+      </h5>
+  </div>
 </nav>
