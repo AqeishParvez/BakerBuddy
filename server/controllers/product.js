@@ -1,9 +1,10 @@
 import productsModel from '../models/product.js';
+import conversionModel from '../models/conversion.js';
 
 /* GET All Products List page. READ */
 export function displayProductList(req, res, next) {
     // find all prodcuts in the product collection
-    productsModel.find((err, productCollection) => {
+    productsModel.find().populate('unitOfMeasurement', 'unitName').exec((err, productCollection) => {
         if (err) {
             console.error(err);
             res.end(err);
@@ -14,16 +15,24 @@ export function displayProductList(req, res, next) {
 
 // GET the Product Details page in order to add a new Product
 export function displayAddPage(req, res, next) {
-    res.render('index', { title: 'Add Product', page: 'product/edit', product: {} });
+    conversionModel.find((err, conversionCollection) => {
+        if (err) {
+            console.error(err);
+            res.end(err);
+        }
+        res.render('index', { title: 'Add Product', page: 'product/add', conversion: conversionCollection });
+    })
 }
 
 // POST process the Product Details page and create a new Product - CREATE
 export function processAddPage(req, res, next) {
+    
     let newProduct = productsModel({
         name: req.body.name,
         price: req.body.price,
         expiry: req.body.expiry,
         quantity: req.body.quantity,
+        unitOfMeasurement: req.body.uom,
         // Add other product-related fields as needed
     });
     productsModel.create(newProduct, function(error) {
@@ -34,6 +43,7 @@ export function processAddPage(req, res, next) {
 
         res.redirect('/product/list');
     });
+    
 }
 
 // GET the Product Details page in order to edit an existing Product

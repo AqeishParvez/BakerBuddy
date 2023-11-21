@@ -40,9 +40,10 @@
                 <option value="0">Name</option>
                 <option value="1">Price</option>
                 <option value="2">Quantity</option>
-                <option value="3">Product Expiry</option>
-                <option value="4">Created At</option>
-                <option value="5">Updated At</option>
+                <option value="3">UOM</option>
+                <option value="4">Product Expiry</option>
+                <option value="5">Created At</option>
+                <option value="6">Updated At</option>
             </select>
             <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterTable()">
 
@@ -53,6 +54,7 @@
                     <th class="text-center col-2">Name</th>
                     <th class="text-center col-2">Price</th>
                     <th class="text-center col-2">Quantity</th>
+                    <th class="text-center col-2">UOM</th>
                     <th class="text-center col-2">Product Expiry</th>
                     <th class="text-center col-2">Created At</th>
                     <th class="text-center col-2">Updated At</th>                    
@@ -71,6 +73,9 @@
                         </td>
                         <td class="text-center col-2">
                             <%= product[count].quantity %>
+                        </td>
+                        <td class="text-center col-2">
+                            <%= product[count].unitOfMeasurement.unitName %>
                         </td>
                         <td class="text-center col-2">
                             <%= `${product[count].expiry.getFullYear()}-${(product[count].expiry.getMonth() + 1).toString().padStart(2, '0')}-${product[count].expiry.getDate().toString().padStart(2, '0')}` %>
