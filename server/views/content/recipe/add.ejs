@@ -1,3 +1,48 @@
+<script>
+    function updateIngredientFields() {
+        let amountOfIngredients = parseInt(document.getElementById('IngredientAmountTextField').value);
+        const container = document.getElementById('dynamicIngredientsContainer');
+
+        // Clear existing fields
+        container.innerHTML = '';
+        if (amountOfIngredients <= 0) amountOfIngredients = 1;
+        if (amountOfIngredients >= 15) amountOfIngredients = 15;
+        // Limit amount between 1 and 15
+        if (amountOfIngredients >= 1 && amountOfIngredients <= 15) {
+            for (let i = 1; i <= amountOfIngredients; i++) {
+                // Create and append each set of fields
+                container.innerHTML += `
+                    <div class="form-group">
+                        <label for="Ingredient${i}SelectField">Ingredient ${i}</label>
+                        <select class="form-control" id="Ingredient${i}SelectField" name="Ingredient${i}" required>
+                            <option value="">Select Ingredient</option>
+                            <% product.forEach(prod => { %>
+                                <option value="<%= prod._id %>"><%= prod.name %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Ingredient${i}QuantityTextField">Quantity</label>
+                        <input type="number" class="form-control"
+                            id="Ingredient${i}QuantityTextField"
+                            placeholder="Enter the Ingredient Quantity"
+                            name="Ingredient${i}Quantity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Ingredient${i}UomSelectField">UOM</label>
+                        <select class="form-control" id="Ingredient${i}UomSelectField" name="Ingredient${i}Uom" required>
+                            <option value="">Select Unit of Measurement</option>
+                            <% conversion.forEach(conv => { %>
+                                <option value="<%= conv._id %>"><%= conv.unitName %></option>
+                            <% }); %>
+                        </select>
+                    </div>`;
+            }
+        }
+    }
+</script>
+
+
 <div class="container">
     <div class="row">
         <div class="offset-md-3 col-md-6">
@@ -33,73 +78,21 @@
                 </div>
 
                 <br>
-                
+
                 <div class="form-group">
-                    <label for="IngredientAmountTextField">Amount of Ingredient</label>
+                    <label for="IngredientAmountTextField">Amount of Ingredient (Min:1, Max: 15)</label>
                     <input type="number" class="form-control"
                         id="IngredientAmountTextField"
                         placeholder="Enter the Amount of Ingredient"
-                        name="amountOfIngredient" required>
+                        name="amountOfIngredient" 
+                        onchange="updateIngredientFields()"
+                        required>
                 </div>
 
                 <br>
 
-                <div class="form-group">
-                    <label for="Ingredient1SelectField">Ingredient 1</label>
-                    <select class="form-control" id="Ingredient1SelectField" name="Ingredient1" required>
-                        <option value="">Select finish Product</option>
-                        <% for(let count=0; count < product.length; count++) { %>
-                        <option value="<%= product[count]._id %>"><%= product[count].name %></option>
-                        <% } %>
-                    </select>
-                </div>
+                <div id="dynamicIngredientsContainer">
 
-                <div class="form-group">
-                    <label for="Ingredient1QuantityTextField">Quantity</label>
-                    <input type="number" class="form-control"
-                        id="Ingredient1QuantityTextField"
-                        placeholder="Enter the Ingredient Quantity"
-                        name="Ingredient1Quantity" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="Ingredient1UomSelectField">UOM</label>
-                    <select class="form-control" id="Ingredient1UomSelectField" name="Ingredient1Uom" required>
-                        <option value="">Select Unit of Measurement</option>
-                        <% for(let count=0; count < conversion.length; count++) { %>
-                        <option value="<%= conversion[count]._id %>"><%= conversion[count].unitName %></option>
-                        <% } %>
-                    </select>
-                </div>
-
-                <br>
-
-                <div class="form-group">
-                    <label for="Ingredient2SelectField">Ingredient 2</label>
-                    <select class="form-control" id="Ingredient2SelectField" name="Ingredient2" required>
-                        <option value="">Select finish Product</option>
-                        <% for(let count=0; count < product.length; count++) { %>
-                        <option value="<%= product[count]._id %>"><%= product[count].name %></option>
-                        <% } %>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="Ingredient2QuantityTextField">Quantity</label>
-                    <input type="number" class="form-control"
-                        id="Ingredient2QuantityTextField"
-                        placeholder="Enter the Ingredient Quantity"
-                        name="Ingredient2Quantity" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="Ingredient2UomSelectField">UOM</label>
-                    <select class="form-control" id="Ingredient2UomSelectField" name="Ingredient2Uom" required>
-                        <option value="">Select Unit of Measurement</option>
-                        <% for(let count=0; count < conversion.length; count++) { %>
-                        <option value="<%= conversion[count]._id %>"><%= conversion[count].unitName %></option>
-                        <% } %>
-                    </select>
                 </div>
 
                 <br>

@@ -33,9 +33,10 @@ export function displayAddPage(req, res, next) {
 // POST process the Product Details page and create a new Product - CREATE
 export function processAddPage(req, res, next) {
     let ingredients = []
-    //hard coded 2 in for now for my own sanity
-    /*req.body.amount*/
-    for (let i = 1; i <= 2; i++){
+    let ingredient = req.body.amountOfIngredient
+    if (ingredient <= 0) ingredient = 1;
+    if (ingredient >= 15) ingredient = 15;
+    for (let i = 1; i <= ingredient; i++){
         ingredients.push({
             ingredientID: req.body[`Ingredient${i}`],
             ingredientQuantity: req.body[`Ingredient${i}Quantity`],
@@ -62,39 +63,12 @@ export function processAddPage(req, res, next) {
 
 // GET the Product Details page in order to edit an existing Product
 export function displayEditPage(req, res, next) {
-    let id = req.params.id;
-
-    productsModel.findById(id, function(error, product) {
-        if (error) {
-            console.error(error);
-            res.end(error);
-        }
-
-        res.render('index', { title: 'Edit Product', page: 'product/edit', product });
-    });
+    //TODO
 }
 
 // POST - process the information passed from the details form and update the document
 export function processEditPage(req, res, next) {
-    let id = req.params.id;
-
-    let newProduct = productsModel({
-        "_id": req.body.id,
-        name: req.body.name,
-        price: req.body.price,
-        expiry: req.body.expiry,
-        quantity: req.body.quantity,
-    });
-
-    productsModel.updateOne({_id: id}, newProduct, function(error){
-        if(error){
-            console.error(error);
-            res.end(error);
-        }
-
-        res.redirect('/product/list');
-
-    })
+    //TODO
 }
 
 export function displayDetailPage(req, res, next) {
