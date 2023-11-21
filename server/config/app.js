@@ -38,6 +38,7 @@ import employeesRouter from '../routes/employees.js';
 import productRouter from '../routes/product.js';
 import authRouter from '../routes/auth.js';
 import conversionRouter from '../routes/conversion.js';
+import recipeRouter from '../routes/recipe.js';
 
 const app = new express();
 
@@ -128,6 +129,7 @@ app.use('/auth', authRouter);
 app.use('/employees', isAuthenticated, employeesRouter);
 app.use('/product', isAuthenticated, productRouter)
 app.use('/conversion', isAuthenticated, conversionRouter)
+app.use('/recipe', isAuthenticated, recipeRouter)
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
     console.log('Request received for path:'+req.path);

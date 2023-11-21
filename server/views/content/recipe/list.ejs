@@ -28,7 +28,7 @@
     </div>
     <div class="row">
         <div class="text-end"> <!-- New column for the button -->
-            <a href="/product/add" class="btn btn-success" role="button">
+            <a href="/recipe/add" class="btn btn-success" role="button">
                 <i class="fas fa-plus-circle"></i> Add New
             </a>
             <br><br>
@@ -37,12 +37,9 @@
     <div class="row">
         <div class="offset-md-1 col-md-11">
             <select id="searchColumn">
-                <option value="0">Unit</option>
-                <option value="1"></option>
-                <option value="2"></option>
-                <option value="3"> </option>
-                <option value="4"> </option>
-                <option value="5"> </option>
+                <option value="0">Name</option>
+                <option value="1">Expected Quantity</option>
+                <option value="2">UOM</option>
             </select>
             <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterTable()">
 
@@ -50,48 +47,40 @@
                 
                 <!-- Header Row-->
                 <tr class="table-dark">
-                    <th class="text-center col-2">Unit</th>
-                    <th class="text-center col-2"></th>
-                    <th class="text-center col-2"></th>
-                    <th class="text-center col-2"> </th>
-                    <th class="text-center col-2"> </th>
-                    <th class="text-center col-2"> </th>                    
-                    
+                    <th class="text-center col-2">Name</th>
+                    <th class="text-center col-2">Expected Quantity</th>
+                    <th class="text-center col-2">UOM</th>       
+                    <th class="text-center col-2"></th>     
                     <!-- Add other employee-related header columns as needed -->
                 </tr>
     
                 <!-- Repeatable Template Row -->
-                <% for(let count=0; count < conversion.length; count++) { %>
+                <% for(let count=0; count < recipe.length; count++) { %>
                     <tr>
                         <td class="text-center col-2">
-                            <%= conversion[count].unitName %>
+                            <%= recipe[count].product.name %>
                         </td>
                         <td class="text-center col-2">
+                            <%= recipe[count].outputQuantity %>
                         </td>
                         <td class="text-center col-2">
-
+                            <%= recipe[count].unitOfMeasurement.unitName %>
                         </td>
-                        <td class="text-center col-2">
-
-                        </td>
-                        <td class="text-center col-2">
-
-                        </td>
-                        <td class="text-center col-2">
-
-                        </td>
-                        
                         <!-- Add other employee-related columns as needed -->
                         <td class="text-center col-1">
-                            <a class="btn btn-warning" href="/conversion/edit/<%= conversion[count]._id %>">
-                                Edit
+                            <a class="btn btn-warning" href="/recipe/detail/<%= recipe[count]._id %>">
+                                Detail
                             </a>
                         </td>
-                        <td class="text-center col-1">
-                            <a class="btn btn-danger" href="/conversion/delete/<%= conversion[count]._id %>">
-                                Delete
-                            </a>
-                        </td>
+                        <!--
+                            
+                            <td class="text-center col-1">
+                                <a class="btn btn-danger" href="/recipe/delete/<%= recipe[count]._id %>">
+                                    Delete
+                                </a>
+                            </td>
+
+                        -->
                     </tr>
                 <% } %>
             </table>

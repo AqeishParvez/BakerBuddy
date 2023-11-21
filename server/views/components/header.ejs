@@ -25,6 +25,15 @@
                     <li class="nav-item">
                       <a class="nav-link <%= (page == 'product/list') ? 'active' : ''; %>" aria-current="page" href="/product/list"><i class="fa-solid fa-book fa-lg"></i> Inventory</a>
                     </li>
+
+                    <li class="nav-item">
+                      <a class="nav-link <%= (page == 'recipe/list') ? 'active' : ''; %>" aria-current="page" href="/recipe/list"><i class="fa-solid fa-book fa-lg"></i> Recipe</a>
+                    </li>
+
+                    <li class="nav-item">
+                      <a class="nav-link <%= (page == 'conversion/list') ? 'active' : ''; %>" aria-current="page" href="/conversion/list"><i class="fa-solid fa-book fa-lg"></i> Conversion</a>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <%= user.displayName %>

@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row">
+        <div class="offset-md-3 col-md-6">
+            <h1><%= title %></h1>
+                <div class="form-group">
+                    <label for="productSelectField">Finish Product</label>
+                    <input type="text" class="form-control" id="productUomTextField" placeholder="<%= recipe.product.name %>" name="uom" disabled>
+                </div>
+            
+                <div class="form-group">
+                    <label for="productQuantityTextField">Quantity</label>
+                    <input type="text" class="form-control" id="productQuantityTextField" placeholder="<%= recipe.outputQuantity %>" name="uom" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="productUomSelectField">UOM</label>
+                    <input type="text" class="form-control" id="productUomSelectField" placeholder="<%= recipe.unitOfMeasurement.unitName %>" name="uom" disabled>
+                </div>
+
+                <br>
+                
+                <div class="form-group">
+                    <label for="IngredientAmountTextField">Amount of Ingredient</label>
+                    <input type="text" class="form-control" id="IngredientAmountTextField" placeholder="<%= recipe.ingredients.length %>" name="uom" disabled>
+                </div>
+
+                <br>
+                <% for(let count=0; count < recipe.ingredients.length; count++) { %>
+                <div class="form-group">
+                    <label for="Ingredient1SelectField">Ingredient <%= count+1 %></label>
+                    <input type="text" class="form-control" id="Ingredient1SelectField" placeholder="<%= recipe.ingredients[count].ingredientID.name %>" name="uom" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="Ingredient1QuantityTextField">Quantity</label>
+                    <input type="text" class="form-control" id="Ingredient1QuantityTextField" placeholder="<%= recipe.ingredients[count].ingredientQuantity %>" name="uom" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="Ingredient1UomSelectField">UOM</label>
+                    <input type="text" class="form-control" id="Ingredient1UomSelectField" placeholder="<%= recipe.ingredients[count].ingredientUOM.unitName %>" name="uom" disabled>
+                </div>
+                <br>
+                <% } %>
+
+                <br>
+                <a href="/recipe/list" class="btn btn-warning">
+                    <i class="fas fa-undo"></i> Back</a>
+        </div>
+    </div>
+</div>
