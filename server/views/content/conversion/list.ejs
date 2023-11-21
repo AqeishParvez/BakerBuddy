@@ -3,7 +3,7 @@
 
     var filterTable = () => {
         var filterColumns = document.getElementById("searchColumn").value
-        var trs = document.querySelectorAll(`#employeeTbl tbody tr`)
+        var trs = document.querySelectorAll(`#inventoryTbl tbody tr`)
         var filter = document.getElementById("searchInput").value
         var regex = new RegExp(filter, 'i')
 
@@ -28,7 +28,7 @@
     </div>
     <div class="row">
         <div class="text-end"> <!-- New column for the button -->
-            <a href="/employees/add" class="btn btn-success" role="button">
+            <a href="/product/add" class="btn btn-success" role="button">
                 <i class="fas fa-plus-circle"></i> Add New
             </a>
             <br><br>
@@ -37,63 +37,58 @@
     <div class="row">
         <div class="offset-md-1 col-md-11">
             <select id="searchColumn">
-                <option value="0">Username</option>
-                <option value="1">First Name</option>
-                <option value="2">Last Name</option>
-                <option value="3">Role</option>
-                <option value="4">Email</option>
-                <option value="5">Registration Code</option> <!-- New column for registration code -->
-                <option value="6">Registered</option> <!-- New column for registered field -->
+                <option value="0">Unit</option>
+                <option value="1"></option>
+                <option value="2"></option>
+                <option value="3"> </option>
+                <option value="4"> </option>
+                <option value="5"> </option>
             </select>
             <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterTable()">
-            <table id="employeeTbl" class="table table-bordered table-striped table-hover sortable">
+
+            <table id="inventoryTbl" class="table table-bordered table-striped table-hover sortable">
                 
                 <!-- Header Row-->
                 <tr class="table-dark">
-                    <th class="text-center col-2">Username</th>
-                    <th class="text-center col-2">First Name</th>
-                    <th class="text-center col-2">Last Name</th>
-                    <th class="text-center col-2">Role</th>
-                    <th class="text-center col-2">Email</th>
-                    <th class="text-center col-2">Registration Code</th> <!-- New column for registration code -->
-                    <th class="text-center col-2">Registered</th> <!-- New column for registered field -->
+                    <th class="text-center col-2">Unit</th>
                     <th class="text-center col-2"></th>
                     <th class="text-center col-2"></th>
+                    <th class="text-center col-2"> </th>
+                    <th class="text-center col-2"> </th>
+                    <th class="text-center col-2"> </th>                    
+                    
                     <!-- Add other employee-related header columns as needed -->
                 </tr>
     
                 <!-- Repeatable Template Row -->
-                <% for(let count=0; count < employees.length; count++) { %>
+                <% for(let count=0; count < conversion.length; count++) { %>
                     <tr>
                         <td class="text-center col-2">
-                            <%= employees[count].username %>
+                            <%= conversion[count].unitName %>
                         </td>
                         <td class="text-center col-2">
-                            <%= employees[count].firstName %>
                         </td>
                         <td class="text-center col-2">
-                            <%= employees[count].lastName %>
+
                         </td>
                         <td class="text-center col-2">
-                            <%= employees[count].role %>
+
                         </td>
                         <td class="text-center col-2">
-                            <%= employees[count].email %>
+
                         </td>
                         <td class="text-center col-2">
-                            <%= employees[count].registrationCode %>
+
                         </td>
-                        <td class="text-center col-2">
-                            <%= employees[count].registered %>
-                        </td>
+                        
                         <!-- Add other employee-related columns as needed -->
                         <td class="text-center col-1">
-                            <a class="btn btn-warning" href="/employees/edit/<%= employees[count]._id %>">
+                            <a class="btn btn-warning" href="/product/edit/<%= conversion[count]._id %>">
                                 Edit
                             </a>
                         </td>
                         <td class="text-center col-1">
-                            <a class="btn btn-danger" href="/employees/delete/<%= employees[count]._id %>">
+                            <a class="btn btn-danger" href="/product/delete/<%= conversion[count]._id %>">
                                 Delete
                             </a>
                         </td>

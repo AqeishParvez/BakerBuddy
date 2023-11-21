@@ -37,6 +37,7 @@ import indexRouter from '../routes/index.js';
 import employeesRouter from '../routes/employees.js';
 import productRouter from '../routes/product.js';
 import authRouter from '../routes/auth.js';
+import conversionRouter from '../routes/conversion.js';
 
 const app = new express();
 
@@ -126,7 +127,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/employees', isAuthenticated, employeesRouter);
 app.use('/product', isAuthenticated, productRouter)
-
+app.use('/conversion', isAuthenticated, conversionRouter)
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
     console.log('Request received for path:'+req.path);
