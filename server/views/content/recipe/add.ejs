@@ -36,7 +36,8 @@
                                 <option value="<%= conv._id %>"><%= conv.unitName %></option>
                             <% }); %>
                         </select>
-                    </div>`;
+                    </div>
+                    <br>`;
             }
         }
     }
@@ -53,9 +54,9 @@
                     <label for="productSelectField">Finish Product</label>
                     <select class="form-control" id="productSelectField" name="product" required>
                         <option value="">Select finish Product</option>
-                        <% for(let count=0; count < product.length; count++) { %>
-                        <option value="<%= product[count]._id %>"><%= product[count].name %></option>
-                        <% } %>
+                        <% product.forEach(prod => { %>
+                            <option value="<%= prod._id %>"><%= prod.name %></option>
+                        <% }) %>
                     </select>
                 </div>
 
@@ -71,9 +72,9 @@
                     <label for="productUomSelectField">UOM</label>
                     <select class="form-control" id="productUomSelectField" name="uom" required>
                         <option value="">Select Unit of Measurement</option>
-                        <% for(let count=0; count < conversion.length; count++) { %>
-                        <option value="<%= conversion[count]._id %>"><%= conversion[count].unitName %></option>
-                        <% } %>
+                        <% conversion.forEach(conv => { %>
+                            <option value="<%= conv._id %>"><%= conv.unitName %></option>
+                        <% }) %>
                     </select>
                 </div>
 
@@ -92,10 +93,34 @@
                 <br>
 
                 <div id="dynamicIngredientsContainer">
-
+                    <div class="form-group">
+                        <label for="Ingredient1SelectField">Ingredient 1</label>
+                        <select class="form-control" id="Ingredient1SelectField" name="Ingredient1" required>
+                            <option value="">Select Ingredient</option>
+                            <% product.forEach(prod => { %>
+                                <option value="<%= prod._id %>"><%= prod.name %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Ingredient1QuantityTextField">Quantity</label>
+                        <input type="number" class="form-control"
+                            id="Ingredient1QuantityTextField"
+                            placeholder="Enter the Ingredient Quantity"
+                            name="Ingredient1Quantity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Ingredient1UomSelectField">UOM</label>
+                        <select class="form-control" id="Ingredient1UomSelectField" name="Ingredient1Uom" required>
+                            <option value="">Select Unit of Measurement</option>
+                            <% conversion.forEach(conv => { %>
+                                <option value="<%= conv._id %>"><%= conv.unitName %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <br>
                 </div>
 
-                <br>
                 <br>
                 <button class="btn btn-primary" type="submit">
                     <i class="fas fa-edit"></i> Submit</button>

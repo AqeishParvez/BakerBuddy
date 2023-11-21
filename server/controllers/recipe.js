@@ -63,12 +63,62 @@ export function processAddPage(req, res, next) {
 
 // GET the Product Details page in order to edit an existing Product
 export function displayEditPage(req, res, next) {
-    //TODO
+    conversionModel.find((err, conversionCollection) => {
+        if (err) {
+            console.error(err);
+            res.end(err);
+        }
+        productsModel.find((err, productCollection) => {
+            if (err) {
+                console.error(err);
+                res.end(err);
+            }
+            let id = req.params.id;
+            recepiesModel.findById(id)
+            .populate('product', 'name')
+            .populate('unitOfMeasurement', 'unitName')
+            .populate({path: 'ingredients.ingredientID',model: 'Products'})
+            .populate({path: 'ingredients.ingredientUOM',model: 'Conversion'})
+            .exec((error, recipe) => {
+                if (error) {
+                    console.error(error);
+                    res.end(error);
+                }
+                console.log(recipe)
+                res.render('index', { title: 'Recipe Detail', page: 'recipe/edit', recipe ,conversion: conversionCollection, product: productCollection});
+            });
+        })
+    })
 }
 
 // POST - process the information passed from the details form and update the document
 export function processEditPage(req, res, next) {
-    //TODO
+    let id = req.params.id;
+    let ingredients = []
+    let ingredient = req.body.amountOfIngredient
+    if (ingredient <= 0) ingredient = 1;
+    if (ingredient >= 15) ingredient = 15;
+    for (let i = 1; i <= ingredient; i++){
+        ingredients.push({
+            ingredientID: req.body[`Ingredient${i}`],
+            ingredientQuantity: req.body[`Ingredient${i}Quantity`],
+            ingredientUOM: req.body[`Ingredient${i}Uom`],
+        })
+    }
+    let newRecipe = {
+        outputQuantity: req.body.quantity,
+        unitOfMeasurement: req.body.uom,
+        ingredients: ingredients
+    };
+    console.log(newRecipe)
+    recepiesModel.updateOne({_id: id}, newRecipe, function(error){
+        if(error){
+            console.error(error);
+            res.end(error);
+        }
+        res.redirect('/recipe/list');
+
+    })
 }
 
 export function displayDetailPage(req, res, next) {

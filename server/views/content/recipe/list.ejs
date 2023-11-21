@@ -52,6 +52,7 @@
                     <th class="text-center col-2">UOM</th>       
                     <th class="text-center col-1"></th>     
                     <th class="text-center col-1"></th>    
+                    <th class="text-center col-1"></th>    
                     <!-- Add other employee-related header columns as needed -->
                 </tr>
     
@@ -69,8 +70,14 @@
                         </td>
                         <!-- Add other employee-related columns as needed -->
                         <td class="text-center col-1">
-                            <a class="btn btn-warning" href="/recipe/detail/<%= recipe[count]._id %>">
+                            <a class="btn btn-primary" href="/recipe/detail/<%= recipe[count]._id %>">
                                 Detail
+                            </a>
+                        </td>
+
+                        <td class="text-center col-1">
+                            <a class="btn btn-warning" href="/recipe/edit/<%= recipe[count]._id %>">
+                                Edit
                             </a>
                         </td>
                             
