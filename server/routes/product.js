@@ -1,7 +1,7 @@
 // modules required for routing
 import { Router } from "express";
 
-import { displayAddPage, displayProductList, displayEditPage, processAddPage, processDelete, processEditPage } from "../controllers/product.js";
+import { displayAddPage, displayProductList, displayEditPage, processAddPage, processEditPage } from "../controllers/product.js";
 
 const router = Router();
 
@@ -22,6 +22,6 @@ router.get('/edit/:id', displayEditPage);
 router.post('/edit/:id', processEditPage);
 
 // GET - process the delete by user id
-router.get('/delete/:id', processDelete);
+//router.get('/delete/:id', processDelete);
 
 export default router;

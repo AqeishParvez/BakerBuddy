@@ -83,16 +83,16 @@ export function processEditPage(req, res, next) {
     })
 }
 
-// GET - process the delete by user id
-export function processDelete(req, res, next) {
-    let id = req.params.id;
+// // GET - process the delete by user id
+// export function processDelete(req, res, next) {
+//     let id = req.params.id;
 
-    productsModel.remove({ _id: id }, function(error) {
-        if (error) {
-            console.error(error);
-            res.end(error);
-        }
+//     productsModel.remove({ _id: id }, function(error) {
+//         if (error) {
+//             console.error(error);
+//             res.end(error);
+//         }
 
-        res.redirect('/product/list');
-    });
-}
+//         res.redirect('/product/list');
+//     });
+// }
