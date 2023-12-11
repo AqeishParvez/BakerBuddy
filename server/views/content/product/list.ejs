@@ -17,6 +17,27 @@
     
         trs.forEach(setTr)
     }
+
+    function exportTableToCSV(filename) {
+        var csv = []
+        var rows = document.querySelectorAll("#inventoryTbl tr")
+        var csvFile
+        var downloadLink
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th")
+            for (var j = 0; j < cols.length - 1; j++) 
+                row.push('"' + cols[j].innerText + '"')
+            csv.push(row.join(","));        
+        }
+        csv = csv.join("\n")
+        csvFile = new Blob([csv], {type: "text/csv"})
+        downloadLink = document.createElement("a")
+        downloadLink.download = filename
+        downloadLink.href = window.URL.createObjectURL(csvFile)
+        downloadLink.style.display = "none"
+        document.body.appendChild(downloadLink)
+        downloadLink.click()
+    }
 </script>
 <main class="container">
     <div class="row">
@@ -31,6 +52,9 @@
             <a href="/product/add" class="btn btn-success" role="button">
                 <i class="fas fa-plus-circle"></i> Add New
             </a>
+            <button onclick="exportTableToCSV('inventory.csv')" class="btn btn-info">
+                <i class="fas fa-file-csv"></i> Export to CSV
+            </button>
             <br><br>
         </div>
     </div>
