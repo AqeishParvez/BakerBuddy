@@ -1,4 +1,10 @@
 <div class="container">
     <h1><%= title %></h1>
-    Welcome to Baker Buddy!
+    <h5 id="userRole">
+        <% if (user && user.role) { %>
+            Welcome to Baker Buddy <%= user.displayName %>!
+        <% } else { %>
+            Login to continue
+        <% } %>
+    </h5>
 </div>
