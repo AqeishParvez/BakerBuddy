@@ -9,13 +9,8 @@
           <li class="nav-item">
             <a class="nav-link <%= (page == 'home') ? 'active' : ''; %>" aria-current="page" href="/home"><i class="fa-solid fa-house-signal fa-lg"></i> Home</a>
           </li>
-
-            <!-- Login/Logout-->
             <% if (user) { %>
-                    <!-- User is logged in -->
                     <% console.log('User:', user); %>
-
-                    <!-- Logged in user is admin -->
                     <% if (user.role == 'Admin') { %>
                         <li class="nav-item">
                           <a class="nav-link <%= (page == 'employees/list') ? 'active' : ''; %>" aria-current="page" href="/employees/list"><i class="fa-solid fa-book fa-lg"></i> Employee Manager</a>
@@ -43,7 +38,6 @@
                         </ul>
                     </li>
                 <% } else { %>
-                    <!-- User is not logged in -->
                     <li class="nav-item">
                         <a class="nav-link <%= (page == 'auth/login') ? 'active' : ''; %>" aria-current="page" href="/auth/login">Login</a>
                     </li>

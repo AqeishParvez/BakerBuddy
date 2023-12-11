@@ -53,7 +53,6 @@
                         <option value="Admin" <%= (employee.role === 'Admin') ? 'selected' : '' %>>Admin</option>
                         <option value="Manager" <%= (employee.role === 'Manager') ? 'selected' : '' %>>Manager</option>
                         <option value="Baker" <%= (employee.role === 'Baker') ? 'selected' : '' %>>Baker</option>
-                        <!-- Add other roles as needed -->
                     </select>
                 </div>
 
@@ -94,7 +93,6 @@
 <script>
     // Include the generateUniquePinCode function directly in the EJS template
     function generateUniquePinCode() {
-        // For simplicity, we'll use a basic example here
         return Math.floor(1000 + Math.random() * 9000).toString();
     }
 

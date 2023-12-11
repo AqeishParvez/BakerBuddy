@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="text-end"> <!-- New column for the button -->
+        <div class="text-end">
             <a href="/employees/add" class="btn btn-success" role="button">
                 <i class="fas fa-plus-circle"></i> Add New
             </a>
@@ -42,8 +42,8 @@
                 <option value="2">Last Name</option>
                 <option value="3">Role</option>
                 <option value="4">Email</option>
-                <option value="5">Registration Code</option> <!-- New column for registration code -->
-                <option value="6">Registered</option> <!-- New column for registered field -->
+                <option value="5">Registration Code</option>
+                <option value="6">Registered</option>
             </select>
             <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterTable()">
             <table id="employeeTbl" class="table table-bordered table-striped table-hover sortable">
@@ -55,14 +55,12 @@
                     <th class="text-center col-2">Last Name</th>
                     <th class="text-center col-2">Role</th>
                     <th class="text-center col-2">Email</th>
-                    <th class="text-center col-2">Registration Code</th> <!-- New column for registration code -->
-                    <th class="text-center col-2">Registered</th> <!-- New column for registered field -->
+                    <th class="text-center col-2">Registration Code</th> 
+                    <th class="text-center col-2">Registered</th>
                     <th class="text-center col-2"></th>
                     <th class="text-center col-2"></th>
-                    <!-- Add other employee-related header columns as needed -->
                 </tr>
     
-                <!-- Repeatable Template Row -->
                 <% for(let count=0; count < employees.length; count++) { %>
                     <tr>
                         <td class="text-center col-2">
@@ -86,7 +84,6 @@
                         <td class="text-center col-2">
                             <%= employees[count].registered %>
                         </td>
-                        <!-- Add other employee-related columns as needed -->
                         <td class="text-center col-1">
                             <a class="btn btn-warning" href="/employees/edit/<%= employees[count]._id %>">
                                 Edit

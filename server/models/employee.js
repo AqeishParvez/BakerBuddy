@@ -8,8 +8,7 @@ const EmployeeSchema = new Schema({
     email: { type: String, required: true, unique: true, lowercase: true},
     username: { type: String, unique: true },
     registrationCode: { type: String, unique: true},
-    registered: { type: Boolean, default: false }, // Added field
-    // Other employee-related fields to be added later
+    registered: { type: Boolean, default: false }, 
 }, {
     timestamps: true,
     collection: 'employees',

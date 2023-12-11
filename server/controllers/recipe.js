@@ -2,9 +2,9 @@ import recepiesModel from '../models/recipe.js';
 import productsModel from '../models/product.js';
 import conversionModel from '../models/conversion.js';
 
-/* GET All Products List page. READ */
+/* GET All Recipe List page. READ */
 export function displayRecipeList(req, res, next) {
-    // find all prodcuts in the product collection
+    // find all recipes in the product collection
     recepiesModel.find().populate('product', 'name').populate('unitOfMeasurement', 'unitName').exec((err, recepieCollection) => {
         if (err) {
             console.error(err);
@@ -13,7 +13,7 @@ export function displayRecipeList(req, res, next) {
         res.render('index', { title: 'Recipe', page: 'recipe/list', recipe: recepieCollection });
     });}
 
-// GET the Product Details page in order to add a new Product
+// GET the Recipe Details page in order to add a new Recipe
 export function displayAddPage(req, res, next) {
     conversionModel.find((err, conversionCollection) => {
         if (err) {
@@ -30,7 +30,7 @@ export function displayAddPage(req, res, next) {
     })
 }
 
-// POST process the Product Details page and create a new Product - CREATE
+// POST process the Recipe Details page and create a new Recipe - CREATE
 export function processAddPage(req, res, next) {
     let ingredients = []
     let ingredient = req.body.amountOfIngredient
@@ -61,7 +61,7 @@ export function processAddPage(req, res, next) {
     
 }
 
-// GET the Product Details page in order to edit an existing Product
+// GET the Recipe Details page in order to edit an existing Recipe
 export function displayEditPage(req, res, next) {
     conversionModel.find((err, conversionCollection) => {
         if (err) {

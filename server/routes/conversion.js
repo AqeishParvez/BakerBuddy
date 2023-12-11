@@ -5,7 +5,7 @@ import { displayConversionList } from "../controllers/conversion.js";
 
 const router = Router();
 
-/* GET product List page. READ */
+/* GET conversion List page. READ */
 router.get('/list', displayConversionList);
 router.get('/', displayConversionList);
 

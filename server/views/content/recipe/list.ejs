@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="text-end"> <!-- New column for the button -->
+        <div class="text-end">
             <a href="/recipe/add" class="btn btn-success" role="button">
                 <i class="fas fa-plus-circle"></i> Add New
             </a>
@@ -53,10 +53,8 @@
                     <th class="text-center col-1"></th>     
                     <th class="text-center col-1"></th>    
                     <th class="text-center col-1"></th>    
-                    <!-- Add other employee-related header columns as needed -->
                 </tr>
     
-                <!-- Repeatable Template Row -->
                 <% for(let count=0; count < recipe.length; count++) { %>
                     <tr>
                         <td class="text-center col-2">
@@ -68,7 +66,6 @@
                         <td class="text-center col-2">
                             <%= recipe[count].unitOfMeasurement.unitName %>
                         </td>
-                        <!-- Add other employee-related columns as needed -->
                         <td class="text-center col-1">
                             <a class="btn btn-primary" href="/recipe/detail/<%= recipe[count]._id %>">
                                 Detail

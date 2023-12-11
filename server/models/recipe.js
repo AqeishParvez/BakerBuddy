@@ -32,7 +32,6 @@ const RecipeSchema = new Schema({
             required: true
         }
       }]
-    //Other recipe-related fields to be added later
 }, {
     timestamps: true,
     collection: 'recepies'

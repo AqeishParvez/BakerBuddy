@@ -91,7 +91,6 @@ export function displayEditPage(req, res, next) {
 }
 
 // POST - process the information passed from the details form and update the document
-// POST - process the information passed from the details form and update the document
 export function processEditPage(req, res, next) {
     const id = req.params.id;
 

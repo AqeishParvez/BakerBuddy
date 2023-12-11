@@ -48,7 +48,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="text-end"> <!-- New column for the button -->
+        <div class="text-end">
             <a href="/product/add" class="btn btn-success" role="button">
                 <i class="fas fa-plus-circle"></i> Add New
             </a>
@@ -83,10 +83,8 @@
                     <th class="text-center col-2">Created At</th>
                     <th class="text-center col-2">Updated At</th>                    
                     <th class="text-center col-1"></th>    
-                    <!-- Add other employee-related header columns as needed -->
                 </tr>
     
-                <!-- Repeatable Template Row -->
                 <% for(let count=0; count < product.length; count++) { %>
                     <tr>
                         <td class="text-center col-2">
@@ -111,7 +109,6 @@
                             <%= `${product[count].updatedAt.getFullYear()}-${(product[count].updatedAt.getMonth() + 1).toString().padStart(2, '0')}-${product[count].updatedAt.getDate().toString().padStart(2, '0')}` %>
                         </td>
                         
-                        <!-- Add other employee-related columns as needed -->
                         <td class="text-center col-1">
                             <a class="btn btn-warning" href="/product/edit/<%= product[count]._id %>">
                                 Edit

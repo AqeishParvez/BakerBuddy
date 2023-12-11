@@ -21,7 +21,4 @@ router.get('/edit/:id', displayEditPage);
 // POST - process the information passed from the details form and update the document
 router.post('/edit/:id', processEditPage);
 
-// GET - process the delete by user id
-//router.get('/delete/:id', processDelete);
-
 export default router;

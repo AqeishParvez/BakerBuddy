@@ -8,7 +8,6 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     username: String,
     emailAddress: String,
-    //registrationPinCode: String,
     displayName: String,
     role: String,
 

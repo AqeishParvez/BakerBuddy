@@ -5,17 +5,17 @@ import { displayAddPage, displayRecipeList, displayDetailPage, displayEditPage, 
 
 const router = Router();
 
-/* GET product List page. READ */
+/* GET recipe List page. READ */
 router.get('/list', displayRecipeList);
 router.get('/', displayRecipeList);
 
-// GET the Product Details page in order to add a new Product
+// GET the recipe Details page in order to add a new recipe
 router.get('/add', displayAddPage);
 
-// POST process the Product Details page and create a new Product - CREATE
+// POST process the recipe Details page and create a new recipe - CREATE
 router.post('/add', processAddPage);
 
-// GET the Product Details page in order to edit an existing Product
+// GET the recipe Details page in order to edit an existing recipe
 router.get('/edit/:id', displayEditPage);
 
 // POST - process the information passed from the details form and update the document

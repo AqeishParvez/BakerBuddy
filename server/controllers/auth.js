@@ -11,9 +11,6 @@ import User from '../models/user.js';
 //Import Display Name Utility for Authentication
 import {UserDisplayName} from '../utils/index.js';
 
-
-//Display Functions
-
 //Login
 export function DisplayLoginPage(req, res, next){
     if(!req.user){

@@ -1,8 +1,7 @@
 import conversionModel from '../models/conversion.js';
 
-/* GET All conversion List page. READ */
 export function displayConversionList(req, res, next) {
-    // find all prodcuts in the collection
+    // find all conversion in the collection
     conversionModel.find().populate('conversions.targetUnitID').exec((err, conversionCollection) => {
         if (err) {
             console.error(err);

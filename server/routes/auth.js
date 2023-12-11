@@ -9,7 +9,6 @@ router.get('/login', DisplayLoginPage);
 //Process Login Page
 router.post('/login', ProcessLoginPage);
 
-
 //Display Registration Page
 router.get('/register', DisplayRegistrationPage);
 
