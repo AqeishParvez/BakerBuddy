@@ -91,6 +91,7 @@ export function displayEditPage(req, res, next) {
 }
 
 // POST - process the information passed from the details form and update the document
+// POST - process the information passed from the details form and update the document
 export function processEditPage(req, res, next) {
     const id = req.params.id;
 
@@ -111,26 +112,44 @@ export function processEditPage(req, res, next) {
         // Generate a unique username if either firstName or lastName has changed
         generateUniqueUsername(updatedEmployee, () => {
             // Update the document with the new information
-            Employees.updateOne({ _id: id }, updatedEmployee, (error) => {
+            Employees.updateOne({ _id: id }, updatedEmployee, async (error) => {
                 if (error) {
                     console.error(error);
                     res.end(error);
                 }
 
-                // Redirect to the employee list page
-                res.redirect('/employees');
+                // Update the corresponding user's role in the Users collection based on the email address
+                try {
+                    const email = updatedEmployee.email;
+                    await User.updateOne({ emailAddress: email }, { $set: { role: updatedEmployee.role } });
+
+                    // Redirect to the employee list page
+                    res.redirect('/employees');
+                } catch (updateError) {
+                    console.error(updateError);
+                    res.end(updateError);
+                }
             });
         });
     } else {
         // If neither firstName nor lastName has changed, proceed without changing the username
-        Employees.updateOne({ _id: id }, updatedEmployee, (error) => {
+        Employees.updateOne({ _id: id }, updatedEmployee, async (error) => {
             if (error) {
                 console.error(error);
                 res.end(error);
             }
 
-            // Redirect to the employee list page
-            res.redirect('/employees');
+            // Update the corresponding user's role in the Users collection based on the email address
+            try {
+                const email = updatedEmployee.email;
+                await User.updateOne({ emailAddress: email }, { $set: { role: updatedEmployee.role } });
+
+                // Redirect to the employee list page
+                res.redirect('/employees');
+            } catch (updateError) {
+                console.error(updateError);
+                res.end(updateError);
+            }
         });
     }
 }
