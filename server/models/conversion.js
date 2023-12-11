@@ -9,7 +9,7 @@ const ConversionSchema = new Schema({
     conversions: [{
         targetUnitID: {
             type: Schema.Types.ObjectId,
-            ref: 'conversions',
+            ref: 'Conversion',
             required: false
         },
         conversionFactor: {
